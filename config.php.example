@@ -1,0 +1,16 @@
+<?php
+
+self::$Database = [
+    'host' => 'db',
+    'database' => 'db_test',
+    'username' => 'user',
+    'password' => 'user_passwd',
+    'charset' => 'utf8mb4',
+    'collation' => 'utf8mb4_unicode_ci',
+    'prefix' => '',
+];
+
+self::$GeoIP = [
+    'account_id' => 150,
+    'license_key' => 'qwerty',
+];

@@ -1,0 +1,5 @@
+/logs/*
+/vendor
+/.idea
+.env
+/config.php

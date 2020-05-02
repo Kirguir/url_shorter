@@ -1,0 +1,38 @@
+version: '2'
+
+services:
+  db:
+    image: mysql:5.7
+    container_name: "${COMPOSE_PROJECT_NAME}_db"
+    environment:
+      - "MYSQL_DATABASE=db_test"
+      - "MYSQL_USER=user"
+      - "MYSQL_PASSWORD=user_passwd"
+      - "MYSQL_ROOT_PASSWORD=root_passwd"
+    ports:
+      - "3306:3306"
+    restart: always
+    volumes:
+      - ./migrations/:/docker-entrypoint-initdb.d
+  app:
+    build: config/php
+    container_name: "${COMPOSE_PROJECT_NAME}_app"
+    links:
+      - db
+    depends_on:
+      - db
+    restart: always
+    volumes:
+      - ./:/var/www
+  nginx:
+    image: nginx:latest
+    container_name: "${COMPOSE_PROJECT_NAME}_nginx"
+    restart: always
+    ports:
+      - "80:80"
+    links:
+      - app
+    volumes:
+      - ./:/var/www
+      - ./logs/:/var/logs
+      - ./config/nginx/app.conf:/etc/nginx/conf.d/app.conf
